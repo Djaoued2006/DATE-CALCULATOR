@@ -58,9 +58,6 @@ procedure calendar(nbrOfDays , startDay : integer);
         
         writeln();
         
-
-
-        
     end;
 
 var startDay , nbrOfDays : integer;
@@ -69,7 +66,7 @@ begin
 
     writeln('==========Calendar==========');
     writeln();
-    write('Insert the start date (0-Sunday ... 6-Friday) : ');readln(startDay);
+    write('Insert the start date (0-Sunday ... 6-Saturday) : ');readln(startDay);
     write('Insert the number of days in this month : ');readln(nbrOfDays);
 
     writeln('Calendar');
