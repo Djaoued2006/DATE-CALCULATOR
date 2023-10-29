@@ -11,23 +11,11 @@ procedure calendar(nbrOfDays , startDay : integer);
 
         writeln('D  L  M  M  J  V  S');
 
-        if (startDay = 0) then 
-
-            begin
-                write('                  ') ;
-                ptr := 6;
-            end
         
-        else 
-
-            begin   
-
-                while ptr + 1 < startDay do 
-
-                    begin
-                        write('   ');
-                        ptr := ptr + 1;
-                    end;    
+        while ptr < startDay do
+            begin 
+                write('   ');
+                ptr := ptr + 1
             end;
 
         
