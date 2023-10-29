@@ -37,23 +37,11 @@ procedure calendar(nbrOfDays , startDay : integer ; var input : integer);
 
         writeln('D  L  M  M  J  V  S');
 
-        if (startDay = 0) then 
+        while ptr < startDay do 
 
-            begin
-                write('                  ') ;
-                ptr := 6;
-            end
-        
-        else 
-
-            begin   
-
-                while (ptr + 1 < startDay) do 
-
-                    begin
-                        write('   ');
-                        ptr := ptr + 1;
-                    end;    
+            begin 
+                write('   ');
+                ptr := ptr + 1;
             end;
 
         
@@ -81,7 +69,7 @@ procedure calendar(nbrOfDays , startDay : integer ; var input : integer);
                    
             end;
         
-        input := ptr;
+        input := ptr - 1;
         
         writeln();
         
