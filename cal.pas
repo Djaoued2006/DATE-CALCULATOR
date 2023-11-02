@@ -95,21 +95,12 @@ procedure generateCalendars(year , month , startDay: integer);
                     end;
 
                 case month of 
-                    1 : nbrOfDays := 31;
+                    1 , 3 , 5 , 7 , 8 , 10 , 12: nbrOfDays := 31;
                     2 : begin 
                             if isBissextile(year) then nbrOfDays := 29
                             else nbrOfDays := 28
                         end;
-                    3 : nbrOfDays := 31;
-                    4 : nbrOfDays := 30;
-                    5 : nbrOfDays := 31;
-                    6 : nbrOfDays := 30;
-                    7 : nbrOfDays := 31;
-                    8 : nbrOfDays := 31;
-                    9 : nbrOfDays := 30;
-                    10 : nbrOfDays := 31;
-                    11 : nbrOfDays := 30;
-                    12 : nbrOfDays := 31;
+                    4 , 6 , 9 , 11: nbrOfDays := 30;
                 end;
 
                 writeln('year : ' , year , ', month : ', month);
