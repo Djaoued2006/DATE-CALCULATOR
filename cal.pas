@@ -1,143 +1,134 @@
-program makeCalendars;
+program makeCalendar;
+
 
 function isBissextile(year : integer) : boolean;
 
-    var tmp : integer;
-        result : boolean;
-    
-    begin 
-
-        tmp := year div 100;
-        result := True;
-        
-        if (year mod 100 = 0) then  
-
-            begin 
-
-                if (tmp mod 4 <> 0) then result := false;
-
-            end 
-        
+    begin
+        if (year mod 100 = 0) then 
+            isBissextile := ((year div 100) mod 4 = 0)
         else 
-
-            if (year mod 4 <> 0 ) then result := false;
-
-        isBissextile := result;
-
+            isBissextile := (year mod 4 = 0)
     end;
 
-procedure calendar(nbrOfDays , startDay : integer ; var input : integer);
+procedure makeCalendar(days , start : integer ; var lastDay : integer);
 
-    var ptr , i : integer;
+    var i , j , ptr : integer;
 
-    begin 
+    begin
+        for j := 1 to 6 do write('  ');
+        writeln('D  L  M  M  J  V  S');
+        for i := 1 to start do 
+            begin
+                write('   ') 
+            end;
 
-        ptr := 0;
+        ptr := start;
         i := 1;
 
-        writeln('D  L  M  M  J  V  S');
+        for j := 1 to 6 do write('  ');
 
-        while ptr < startDay do 
-
-            begin 
-                write('   ');
-                ptr := ptr + 1;
-            end;
-
-        
         while True do 
-
-            begin 
-
-                if (i = nbrOfDays + 1) then break;
-
-                if (ptr = 7) then 
-
-                    begin   
-                        writeln();
-                        ptr := 0
-                    end; 
-
-                case i of 
-                    1..9 : write(i , '  '); 
-                    else  write(i , ' ') //because for exemple 10 has two digits which will affect the output
-                end;
+            begin
                 
-                i := i + 1;
-                
-                ptr := ptr + 1;
-                   
-            end;
-        
-        input := ptr - 1;
-        
-        writeln();
-        
-    end;
+                if (i = days + 1) then break;
 
-procedure generateCalendars(year , month , startDay: integer);
-    
-    var nbrOfCalendars , nbrOfDays , input : integer;
-
-
-    begin 
-
-        nbrOfCalendars := 0;
-        
-        while (nbrOfCalendars <> 3) do 
-
-            begin 
-                
-                if (month = 13) then 
+                if (ptr = 7) then
                     begin
-                        month := 1;
-                        year := year + 1
+                        ptr := 0; 
+                        writeln();
+                        for j := 1 to 6 do write('  ');
                     end;
-
-                case month of 
-                    1 , 3 , 5 , 7 , 8 , 10 , 12: nbrOfDays := 31;
-                    2 : begin 
-                            if isBissextile(year) then nbrOfDays := 29
-                            else nbrOfDays := 28
-                        end;
-                    4 , 6 , 9 , 11: nbrOfDays := 30;
-                end;
-
-                writeln('year : ' , year , ', month : ', month);
-                writeln();
-                calendar(nbrOfDays , startDay , input);
-                writeln();
                 
-                startDay := input + 1;
+                if (i < 10) then write(i , '  ')
+                else write(i , ' ');
 
-                month := month + 1;
-                nbrOfCalendars := nbrOfCalendars + 1;
+                i := i + 1;
+                ptr := ptr + 1;
 
             end;
-        
+        lastDay := ptr;
+        writeln();
+    end;    
 
+procedure makeCals(year , month : integer; var start: integer);
 
+    var numberOFCals : integer;
+        days , next : integer;
+
+    begin
+        numberOFCals := 0;
+
+        while (numberOFCals <> 3) do 
+            begin
+                case month of 
+                    1 : begin
+                            writeln('Janvier , ' , year);
+                            days := 31;
+                        end;
+                    2 : begin
+                            writeln('Fevrier , ' , year);
+                            if (isBissextile(year)) then 
+                                days := 29
+                            else 
+                                days := 28
+                        end;
+                    3 : begin
+                            writeln('Mars , ' , year);
+                            days := 31;
+                        end;
+                    4 : begin
+                            writeln('Avril , ' , year);
+                            days := 31;
+                        end;
+                    5 : begin
+                            writeln('Mai , ' , year);
+                            days := 31;
+                        end;
+                    6 : begin
+                            writeln('Juin , ' , year);
+                            days := 31;
+                        end;
+                    7 : begin
+                            writeln('Juillet , ' , year);
+                            days := 31;
+                        end;
+                    8 : begin
+                            writeln('Aout , ' , year);
+                            days := 31;
+                        end;
+                    9 : begin
+                            writeln('Septembre , ' , year);
+                            days := 31;
+                        end;
+                    10 : begin
+                            writeln('Octobre , ' , year);
+                            days := 31;
+                        end;
+                    11 : begin
+                            writeln('Novembre , ' , year);
+                            days := 31;
+                        end;
+                    12 : begin
+                            writeln('Decembre , ' , year);
+                            days := 31;
+                            year := year + 1;
+                            month := 0;
+                        end;
+                end;
+                makeCalendar(days , start , next);
+                start := next;
+                month := month + 1;
+                numberOFCals := numberOFCals + 1;
+                writeln();
+            end;
     end;
+    
+var year , month , start: integer;
 
+begin
+    write('type year : ');readln(year);
+    write('type month :');readln(month);
+    write('which start : ');readln(start);
 
-var year , month , startDay : integer;
-
-begin 
-
-    writeln('Hello user!');
-
-    writeln();
-
-    write('Insert a year : ');readln(year);
-    write('Insert a month : ');readln(month);
-    write('Insert the start day (0-Sunday ... 6-Saturday) : ');readln(startDay);
-
-    writeln();
-
-    generateCalendars(year , month , startDay);
-
+    makeCals(year , month , start);
 end.
-
-{Approach : to solve the problem i used a procedure i did before (calendar) that generates a single calendar
-then for every month i did its number and i passed it to my procedure as an argument , for the start days , i used the input variable that stores the last day (sunday etc) 
-then i passed it to startday incrementing it by 1 (sunday last month -> monday new month) and i loooped , until i get the number of calendars wanted!!!}
