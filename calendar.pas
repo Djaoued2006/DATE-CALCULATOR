@@ -1,66 +1,56 @@
-program makeCalendar;
+program makingCalendar;
 
-procedure calendar(nbrOfDays , startDay : integer);
+procedure makeCalendar(days , start : integer);
 
-    var ptr , i : integer;
+    var i , j , ptr : integer;
 
-    begin 
+    begin
+        for j := 1 to 6 do write('  ');
+        writeln('D  L  M  M  J  V  S');
+        for i := 1 to start do 
+            begin
+                write('   ') 
+            end;
 
-        ptr := 0;
+        ptr := start;
         i := 1;
 
-        writeln('D  L  M  M  J  V  S');
+        for j := 1 to 6 do write('  ');
 
-        
-        while ptr < startDay do
-            begin 
-                write('   ');
-                ptr := ptr + 1
-            end;
-
-        
         while True do 
+            begin
+                
+                if (i = days + 1) then break;
 
-            begin 
-
-                if (i = nbrOfDays + 1) then break;
-
-                if (ptr = 7) then 
-
-                    begin   
+                if (ptr = 7) then
+                    begin
+                        ptr := 0; 
                         writeln();
-                        ptr := 0
-                    end; 
+                        for j := 1 to 6 do write('  ');
+                    end;
+                
+                if (i < 10) then write(i , '  ')
+                else write(i , ' ');
 
-                case i of 
-                    1..9 : write(i , '  ');
-                    else  write(i , ' ')
-                end;
-                
                 i := i + 1;
-                
                 ptr := ptr + 1;
 
-                   
             end;
-        
         writeln();
-        
-    end;
+    end;    
 
-var startDay , nbrOfDays : integer;
 
-begin 
+var days , start : integer;
 
-    writeln('==========Calendar==========');
+begin
+    repeat
+        write('type number of days : ');readln(days);
+    until(days >= 0);
+    repeat
+        write('type number of start : ');readln(start);
+    until ((start >= 0) and (start <= 6));
     writeln();
-    write('Insert the start date (0-Sunday ... 6-Saturday) : ');readln(startDay);
-    write('Insert the number of days in this month : ');readln(nbrOfDays);
+    writeln('here''s the calendar you wanted : ');
 
-    writeln('Calendar');
-
-    writeln();
-
-    calendar(nbrOfDays , startDay);
-    
+    makeCalendar(days , start)
 end.
